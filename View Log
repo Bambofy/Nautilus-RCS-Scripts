@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+main() {
+    fn=$(basename $NAUTILUS_SCRIPT_SELECTED_URIS)
+    fnl=${#fn}
+    lc=${fn:fnl-1:1}
+    slc=${fn:fnl-2:1}
+    if [ $lc = 'v' ]; then
+    	if [ $slc = ',' ]; then
+    	    fn=${fn%??}	
+    	fi
+    fi
+    dfn=$(decodeuri $fn)
+    rlog "$dfn" > rcs_log.txt
+    notify-send "Viewing logs for $dfn"
+    zenity --text-info --title="Log" --filename=rcs_log.txt
+    rm rcs_log.txt
+}
+
+main

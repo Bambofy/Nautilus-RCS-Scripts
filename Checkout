@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+main() {
+    fn=$(basename $NAUTILUS_SCRIPT_SELECTED_URIS)
+    fnl=${#fn}
+    lc=${fn:fnl-1:1}
+    slc=${fn:fnl-2:1}
+    if [ $lc = 'v' ]; then
+    	if [ $slc = ',' ]; then
+    	    fn=${fn%??}	
+    	fi
+    fi
+    dfn=$(decodeuri $fn)
+    notify-send "Checked out $dfn"
+    co -l "$dfn"
+}
+
+main
